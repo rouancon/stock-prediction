@@ -6,8 +6,24 @@ train_data <- read_excel("Documents/GitHub/stock-prediction/prices-split-adjuste
 val_data <- read_excel("Documents/GitHub/stock-prediction/prices-split-adjusted.xlsx", sheet = "AAPL-val")
 model_data <- read_excel("Documents/GitHub/stock-prediction/prices-split-adjusted.xlsx", sheet = "AAPL-model")
 
+#normalize data
 library(BBmisc)
-X1 <- train_data$date
+
+date_normalize<-function(y)
+{ #making it a dataframe
+  y<-as.data.frame(y)
+  #converting to required format
+  date_convert <- function(x) {
+    return (format(x, format="%Y%m%d"))}
+  y<- as.data.frame(lapply(y, date_convert))
+  #converting to numeric value
+  y<-data.frame(lapply(y,as.numeric))
+  #normalizing the data
+  y<-normalize(y)
+  return(y)
+}
+
+X1 <- date_normalize(train_data$date)
 X2 <- normalize(train_data$close)
 X3 <- normalize(train_data$low)
 X4 <- normalize(train_data$high)
