@@ -17,7 +17,7 @@ date_normalize<-function(y)
     return (format(x, format="%Y%m%d"))}
   y<- as.data.frame(lapply(y, date_convert))
   #converting to numeric value
-  y<-data.frame(lapply(y,as.numeric))
+  y<- as.numeric(unlist(y))
   #normalizing the data
   y<-normalize(y)
   return(y)
