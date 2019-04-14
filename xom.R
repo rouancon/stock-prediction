@@ -7,6 +7,13 @@ train_data_full <- read_excel("Documents/GitHub/stock-prediction/prices-split-ad
 val_data_full <- read_excel("Documents/GitHub/stock-prediction/prices-split-adjusted.xlsx", sheet = "XOM-val")
 test_data_full <- read_excel("Documents/GitHub/stock-prediction/prices-split-adjusted.xlsx", sheet = "XOM-model")
 
+#initial plots
+plot(train_data_full$open+val_data_full$open+test_data_full$open, type="l", col="red", xlab="Time (day)", ylab="Price ($)", main="Exxon Pricing Data")
+lines(train_data_full$close+val_data_full$close+test_data_full$close,type="l",col="blue")
+lines(train_data_full$low+val_data_full$low+test_data_full$low,type="l",col="green")
+lines(train_data_full$high+val_data_full$high+test_data_full$high,type="l",col="yellow")
+plot(train_data_full$volume+val_data_full$volume+test_data_full$volume, type="l", col="red", xlab="Time (day)", ylab="Volume (# Shares)", main="Exxon Volume Data")
+
 #normalization functions
 normalize <- function(x) {
   return ((x - min(x)) / (max(x) - min(x))) }
@@ -124,7 +131,7 @@ library(ModelMetrics)
 rmse(test_actual, test_pred)
 head(data.frame(actual = test_actual, prediction = test_pred))
 
-plot(test_actual,type="l",col="red",xlab="Time (day)",ylab="Price ($)",main="Predicted vs Actual Price",)
+plot(test_actual,type="l",col="red",xlab="Time (day)",ylab="Price ($)",main="Predicted vs Actual Price")
 legend(195, 95, legend=c("Actual Price", "Predicted Price"),
        col=c("red", "blue"), lty=1:2, cex=0.8)
 lines(test_pred,type="l",col="blue")
